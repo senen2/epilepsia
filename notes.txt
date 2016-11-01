@@ -1,0 +1,12 @@
+Selecting Threshold
+
+Take an Epsilon
+
+Loop
+	Classify all samples < Epsilon (Positives)
+	Count positives, false positives and false negatives with labels
+	Calculate F1 score
+	if new F1 is greater than F1 then F1 = new F1 and BestEpsilon = Epsilon
+	increment Epsilon
+
+Epsilon
