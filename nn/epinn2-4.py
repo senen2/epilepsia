@@ -1,8 +1,7 @@
 '''
-Calculate W1, b1, W2, b2 and save
-this is the best solution
+convulotional
 
-Created on Oct 21, 2016
+Created on Nov 2, 2016
 
 Train_1
 Accuracy: 0.905457 epochs 20000 learning rate 0.0011 hidden 10 *
@@ -21,7 +20,6 @@ AUC 0.948229352347
 
 import tensorflow as tf
 import numpy as np
-import scipy.io
 from apiepi import *
 
 print "begin"

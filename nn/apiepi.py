@@ -45,18 +45,14 @@ def read_train_test(group, part):
         else:
             images_neg.append(images[i])
             labels_neg.append(labels[i])
-    
+        
     npos = np.int(len(images_pos)*part)
     nneg = np.int(len(images_neg)*part)
-    train_images = images_pos[:npos] + images_pos[:nneg]
-    train_labels = labels_pos[:npos] + labels_pos[:nneg]
-    test_images = images_neg[npos:] + images_neg[nneg:]
-    test_labels = labels_neg[npos:] + labels_neg[nneg:]
-
-#     train_images.append(images_pos[:nneg])
-#     train_labels.append(labels_pos[:nneg])
-#     test_images.append(images_neg[nneg:])
-#     test_labels.append(labels_neg[nneg:])
+    
+    train_images = images_pos[:npos] + images_neg[:nneg]
+    train_labels = labels_pos[:npos] + labels_neg[:nneg]
+    test_images = images_pos[npos:] + images_neg[nneg:]
+    test_labels = labels_pos[npos:] + labels_neg[nneg:]
     
     return np.array(train_images), np.array(train_labels), np.array(test_images), np.array(test_labels)
 
