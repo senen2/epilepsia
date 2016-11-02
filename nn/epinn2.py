@@ -69,7 +69,7 @@ with tf.Session() as sess:
     resp = {}
     resp["W"] = W.eval()
     resp["b"] = b.eval()
-    #scipy.io.savemat("resp_3", resp, do_compression=True)
+    scipy.io.savemat("resp_41", resp, do_compression=True)
 
 #     s = tf.argmax(pred, 1)
 #     print s.eval(feed_dict={x:images, y: labels})
