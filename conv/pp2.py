@@ -11,12 +11,12 @@ from matplotlib import pyplot as plt
 #import matplotlib.image as mpimg
 import Image
 
-#im = plt.imread("taj_orig.png")
-im = np.array(Image.open('taj_bw.png'))
+im = plt.imread("taj_orig.png")
+#im = np.array(Image.open('taj_bw.png'))
 #im.save('taj_bw.png')
 print im.shape
-plt.imshow(im)
-plt.show()
+# plt.imshow(im)
+# plt.show()
 #conv = np.array([[0, 1, 0], [1, -4, 1], [0, 1, 0]]) # Edge detect
 a = np.zeros([3, 3, 3, 3])
 a[1, 1, :, :] = -4
@@ -24,8 +24,15 @@ a[0, 1, :, :] = 1
 a[1, 0, :, :] = 1
 a[2, 1, :, :] = 1
 a[1, 2, :, :] = 1
+k = 9
 
-
+a = np.zeros([3, 3, 3, 3])
+a[1, 1, :, :] = 5
+a[0, 1, :, :] = -1
+a[1, 0, :, :] = -1
+a[2, 1, :, :] = -1
+a[1, 2, :, :] = -1
+k = -6
 # a[0, 0, 0, 1] = 0
 #a[0, 0, 1, 0] = 1 # red
 
@@ -54,7 +61,8 @@ x = tf.placeholder(tf.float32, shape=[1, None, None, 3])
 c = tf.get_variable('w', initializer=tf.to_float(a))
 #c = tf.placeholder(tf.float32, shape=[3, 3, 3, 3])
 #x_image = tf.reshape(x, [-1,28,28,1])
-pred = conv2d(x, c)
+#pred = conv2d(x, c)
+pred = tf.nn.conv2d(x, c, strides=[1, 1, 1, 1], padding='SAME')
 
 
 init = tf.initialize_all_variables()
@@ -65,5 +73,5 @@ with tf.Session() as sess:
 
 p = np.array(p[0][0])
 print p.shape
-plt.imshow(p)
+plt.imshow(p/k)
 plt.show()

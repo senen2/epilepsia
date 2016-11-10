@@ -17,9 +17,9 @@ def show_image_ops_gray(img, conv_op, sigmoid_op, avg_pool_op, max_pool_op):
             
     
 def show_image_ops_rgb(img, conv_op, sigmoid_op, avg_pool_op, max_pool_op):
-    gs1 = gridspec.GridSpec(1, 5)
+#     gs1 = gridspec.GridSpec(1, 5)
 #     plt.subplot(gs1[0, 0]); plt.axis('off'); plt.imshow(img[:, :, :])
-    plt.imshow(conv_op[0, :, :, :])
+    plt.imshow(conv_op[0, :, :, :]/-6)
 #     plt.subplot(gs1[0, 2]); plt.axis('off'); plt.imshow(sigmoid_op[0, :, :, :])
 #     plt.subplot(gs1[0, 3]); plt.axis('off'); plt.imshow(avg_pool_op[0, :, :, :])
 #     plt.subplot(gs1[0, 4]); plt.axis('off'); plt.imshow(max_pool_op[0, :, :, :])
@@ -84,28 +84,28 @@ img = Image.open('taj_orig.png')
 # convolve(img, a, rgb=False)
  
 # sharpen rgb
-# a = np.zeros([3, 3, 3, 3])
-# a[1, 1, :, :] = 5
-# a[0, 1, :, :] = -1
-# a[1, 0, :, :] = -1
-# a[2, 1, :, :] = -1
-# a[1, 2, :, :] = -1
-# convolve(img, a)
+a = np.zeros([3, 3, 3, 3])
+a[1, 1, :, :] = 5
+a[0, 1, :, :] = -1
+a[1, 0, :, :] = -1
+a[2, 1, :, :] = -1
+a[1, 2, :, :] = -1
+convolve(img, a)
  
-#borders rgb
-a = np.zeros([3, 3, 1, 1])
-a[1, 1, :, :] = -4
-a[0, 1, :, :] = 1
-a[1, 0, :, :] = 1
-a[2, 1, :, :] = 1
-a[1, 2, :, :] = 1
-print a
-print a.shape
-convolve(img, a, rgb=False)
-
-
-# outline
-a = np.zeros([3, 3, 1, 1])
-a[:, :, :, :] = -1
-a[1, 1, :, :] = 8
-convolve(img, a, rgb=False)
+# #borders rgb
+# a = np.zeros([3, 3, 3, 3])
+# a[1, 1, :, :] = 0.5
+# a[0, 1, :, :] = -.125
+# a[1, 0, :, :] = -.125
+# a[2, 1, :, :] = -.125
+# a[1, 2, :, :] = -.125
+# print a
+# print a.shape
+# convolve(img, a, rgb=True)
+# 
+# 
+# # outline
+# a = np.zeros([3, 3, 1, 1])
+# a[:, :, :, :] = -1
+# a[1, 1, :, :] = 8
+# convolve(img, a, rgb=False)

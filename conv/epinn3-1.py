@@ -1,7 +1,7 @@
 '''
 Create submission
 
-Created on Oct 21, 2016
+Created on Nov 8, 2016
 
 block best solution
 positivos 565 totales 1584
@@ -23,15 +23,32 @@ from apiepi import *
 
 print "begin"
 
-hidden = 10
-W1 = tf.Variable(tf.zeros([256,hidden]))
-b1 = tf.Variable(tf.zeros([hidden]))
-W2 = tf.Variable(tf.zeros([hidden,2]))
-b2 = tf.Variable(tf.zeros([2]))
+cv1_size = 5
+cv2_size = 5
+cv1_channels = 4
+cv2_channels = 4
+hidden = 4
+img_resize = 16
 
-x = tf.placeholder(tf.float32, [None, 256])
-x1 = tf.nn.sigmoid(tf.matmul(x, W1) + b1)
-pred = tf.nn.softmax(tf.matmul(x1, W2) + b2)
+W_conv1 = weight_variable([cv1_size, cv1_size, 1, cv1_channels])
+b_conv1 = bias_variable([cv1_channels])
+W_conv2 = weight_variable([cv2_size, cv2_size, cv1_channels, cv2_channels])
+b_conv2 = bias_variable([cv2_channels])
+W_fc1 = weight_variable([img_resize/4 * img_resize/4 * cv2_channels, hidden])
+b_fc1 = bias_variable([hidden])
+W_fc2 = weight_variable([hidden, 2])
+b_fc2 = bias_variable([2])
+
+x = tf.placeholder(tf.float32, shape=[None, 256])
+x_image = tf.reshape(x, [-1,img_resize,img_resize,1])
+h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
+h_pool1 = max_pool_2x2(h_conv1)
+h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+h_pool2 = max_pool_2x2(h_conv2)
+h_pool2_flat = tf.reshape(h_pool2, [-1, img_resize/4 * img_resize/4  * cv2_channels])
+h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+h_fc1_drop = tf.nn.dropout(h_fc1, 1)
+pred = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)    
 
 init = tf.initialize_all_variables()
 
@@ -41,11 +58,20 @@ r.append(["File", "Class"])
 for i in range(3):
     id = i+1
     resp = scipy.io.loadmat("resp_%s" % id)
-    images, labels, names = read_images("test_%s nz" % id)
+    images, labels, names = read_images("train_%s nz" % id)
     
     with tf.Session() as sess:
         sess.run(init)
-        prob = pred.eval({x:images, W1:resp["W1"], b1:resp["b1"][0], W2:resp["W2"], b2:resp["b2"][0] })
+        prob = pred.eval({x:images, 
+            W_conv1:resp["W_conv1"],
+            b_conv1:resp["b_conv1"][0],
+            W_conv2:resp["W_conv2"],
+            b_conv2:resp["b_conv2"][0],
+            W_fc1:resp["W_fc1"],
+            b_fc1:resp["b_fc1"][0],
+            W_fc2:resp["W_fc2"],
+            b_fc2:resp["b_fc2"][0]                          
+          })
     
     p = 0
     for i in xrange(len(names)):
@@ -55,6 +81,6 @@ for i in range(3):
     print "positivos", p, "totales", len(names)
 
 print "gran total", len(r)
-np.savetxt("submission_nn_10.csv", r, delimiter=',', fmt="%s,%s")
+np.savetxt("submission_conv_1.csv", r, delimiter=',', fmt="%s,%s")
 
 print "end"
