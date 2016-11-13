@@ -12,7 +12,7 @@ import scipy.io
 
 print "begin"
 group = "train"
-sub_file = "submission_conv_1.csv"
+sub_file = "submission_conv_3.csv"
 parameters = {  "cv1_size": 5
               , "cv2_size": 5
               , "cv1_channels": 4
@@ -25,8 +25,8 @@ r.append(["File", "Class"])
 
 for i in range(3):
     ii = i+1
-    features = scipy.io.loadmat("resp_%s" % ii)
-    images, labels, names = read_images("%s_%s nz" % (group, ii))
+    features = scipy.io.loadmat("resp_%s_new" % ii)
+    images, labels, names = read_images("%s %s_new" % (group, ii))
     
     prob = eval_conv(images, parameters, features)
     

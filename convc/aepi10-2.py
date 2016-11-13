@@ -7,6 +7,8 @@ test 1 total 1584, nan 47, not nan 1537
 test 2 total 2256 nan 29
 test 3 total 2286 nan 4
 
+test new 1 216 11 227
+
 en los train los nan se ignoran porque afectan negativamente el entrenamiento ya que hay 0 y 1 en este grupo
 en los test se asumen como 0 para completar el archivo de envio (pueden ser 1 porque evaluan lo mismo)
 
@@ -19,7 +21,7 @@ import matplotlib.pyplot as plt
 
 print "begin"
 # Read samples
-group = "train_3"
+group = "test_3_new"
 #group = "pp1"
 directory = "/media/carlos/CE2CDDEF2CDDD317/concursos/epilepsia/%s/" % group
 test = group[:4]=="test"

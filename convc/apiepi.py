@@ -14,18 +14,26 @@ def read_images(group):
     t.pop("__version__")
     t.pop("__header__")
     
+    
+    pos = 0
+    neg = 0
+    nnan = 0
     images = []
     labels = []
     names = []
     for d in t:
         if not np.isnan(t[d]["corr"][0][0]).any():
             images.append(t[d]["corr"][0][0].ravel())
-            if d[-1]=="1":
+            if t[d]["label"][0][0][0]==1:
                 labels.append([0, 1])
+                pos +=1
             else:
                 labels.append([1, 0])
+                neg +=1
             names.append(d)
-    
+        else:
+            nnan +=1
+    print pos, neg, nnan
     return np.array(images), np.array(labels), names
 
 def read_train_test(group, part):
