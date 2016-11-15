@@ -9,6 +9,7 @@ import tensorflow as tf
 import numpy as np
 from epinn31 import *
 import scipy.io
+from apiepi import *
 
 print "begin"
 group = "test"
@@ -27,7 +28,7 @@ for i in range(3):
     ii = i+1
     features = scipy.io.loadmat("resp_%s_new" % ii)
     #images, labels, names = read_images("%s %s_new" % (group, ii))
-    images, labels, names = read_images("%s_%s_new nz" % (group, ii))
+    images, labels, names = read_images("%s_%s_new" % (group, ii))
     
     prob = eval_conv(images, parameters, features)
     
@@ -42,6 +43,6 @@ for i in range(3):
         print "AUC", auc(labels, prob)
 
 print "gran total", len(r)
-np.savetxt(sub_file, r, delimiter=',', fmt="%s,%s")
+#np.savetxt(sub_file, r, delimiter=',', fmt="%s,%s")
 
 print "end"

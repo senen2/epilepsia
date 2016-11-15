@@ -11,7 +11,7 @@ import tensorflow as tf
 import numpy as np
 from apiepi import *
 
-def train_tf(images, labels, parameters, learning_rate = 0.0005, training_epochs = 100 ):
+def train_tf(images, labels, parameters, learning_rate = 0.0005, training_epochs = 100, dropout = 0.5 ):
 #    display_step = 100
     cv1_size = parameters["cv1_size"]
     cv2_size = parameters["cv2_size"]
@@ -71,7 +71,7 @@ def train_tf(images, labels, parameters, learning_rate = 0.0005, training_epochs
         # Training cycle
         for epoch in range(training_epochs):
     #         print epoch
-            _, c = sess.run([optimizer, cost], feed_dict={x: images, y: labels, keep_prob: 0.5})
+            _, c = sess.run([optimizer, cost], feed_dict={x: images, y: labels, keep_prob: dropout})
             #if (epoch+1) % display_step == 0:
             print "Epoch:", '%04d' % (epoch+1), "cost=", "{:.9f}".format(c)
     

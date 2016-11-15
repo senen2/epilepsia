@@ -46,6 +46,7 @@ for file in os.listdir(directory):
 #         t[name]["sigma2"] = np.std(np.transpose(c), axis=1)**2
 #         t[name]["cov"] = np.cov(np.transpose(c))
         t[name]["corr"] = np.corrcoef(c, rowvar=0)
+        t[name]["label"] = 0
         if np.isnan(t[name]["corr"]).any():
             print name
             if test:
@@ -62,5 +63,5 @@ except:
     pass
 
 print len(t), n, len(t)+n
-scipy.io.savemat(group + " nz", t, do_compression=True)
+scipy.io.savemat(group, t, do_compression=True)
 print "end"

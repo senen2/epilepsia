@@ -62,6 +62,6 @@ for pat in range(3):
             nfound +=1
     print "patient", "total", "nan", "pos", "not_found"
     print patient, len(t), nnan, pos, nfound
-    scipy.io.savemat("train %s_new" % patient, t, do_compression=True)
+    #scipy.io.savemat("train %s_new" % patient, t, do_compression=True)
 
 print "end"
