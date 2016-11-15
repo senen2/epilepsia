@@ -12,10 +12,6 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 AUC 0.959253821775
 
 Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
-0.690955 1000 0.0005 5 5 4 4 4 16
-AUC 0.892062084257
-
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
 0.998744 10000 0.0005 5 5 4 4 4 16
 AUC 0.999992609017 patient 1
 
@@ -35,6 +31,14 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 0.892452 10000 0.0005 5 5 4 4 4 16
 AUC 0.5 patient 2
 
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
+0.892452 1000 0.005 5 5 4 4 4 16
+AUC 0.944406408325 patient 2
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize *
+0.981746     1000     0.01         5         5         4         4         4         16
+AUC 0.994771301495 patient 2
+
 Train3
 Accuracy: 0.942774 epochs 20000 learning rate 0.0011 hidden 10 *
 AUC 0.948229352347
@@ -43,13 +47,13 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 0.972849  10000     0.0005         5         5         4         4         4         16
 AUC 0.978215983363
 
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
-0.882762 1000 0.0005 5 5 4 4 4 16
-AUC 0.699191850031
-
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize *
 0.882762 10000 0.0005 5 5 4 4 4 16
 AUC 0.990899754132 patient 3
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize
+0.991196 10000 0.005 5 5 4 4 4 16
+AUC 0.99501312336 patient 3
 
 @author: botpi
 '''
@@ -68,7 +72,7 @@ parameters = {  "cv1_size": 5
               , "cv2_channels": 4
               , "hidden": 4
               , "img_resize": 16}
-learning_rate = 0.0005
+learning_rate = 0.005
 training_epochs = 10000
 
 images, labels, names = read_images(group)

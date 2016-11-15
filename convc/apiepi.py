@@ -24,12 +24,13 @@ def read_images(group):
     for d in t:
         if not np.isnan(t[d]["corr"][0][0]).any():
             images.append(t[d]["corr"][0][0].ravel())
-            if t[d]["label"][0][0][0]==1:
-                labels.append([0, 1])
-                pos +=1
-            else:
-                labels.append([1, 0])
-                neg +=1
+            if 'label' in t[d]:
+                if t[d]["label"][0][0][0]==1:
+                    labels.append([0, 1])
+                    pos +=1
+                else:
+                    labels.append([1, 0])
+                    neg +=1
             names.append(d)
         else:
             nnan +=1
