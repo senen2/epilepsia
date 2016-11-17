@@ -15,8 +15,10 @@ def train_tf(images, labels, parameters, training_epochs = 100):
 #    display_step = 100
     cv1_size = parameters["cv1_size"]
     cv2_size = parameters["cv2_size"]
+    cv3_size = parameters["cv3_size"]
     cv1_channels = parameters["cv1_channels"]
     cv2_channels = parameters["cv2_channels"]
+    cv3_channels = parameters["cv3_channels"]
     hidden = parameters["hidden"]
     img_resize = parameters["img_resize"]
     learning_rate = parameters["learning_rate"]
@@ -46,11 +48,20 @@ def train_tf(images, labels, parameters, training_epochs = 100):
     print h_conv2
     print h_pool2
     
+    # Third Convolutional Layer
+    W_conv3 = weight_variable([cv3_size, cv3_size, cv2_channels, cv3_channels])
+    b_conv3 = bias_variable([cv3_channels])
+    
+    h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3) + b_conv3)
+    h_pool3 = max_pool_2x2(h_conv3)
+    print h_conv3
+    print h_pool3
+    
     # Densely Connected Layer
-    W_fc1 = weight_variable([img_resize/4 * img_resize/4 * cv2_channels, hidden])
+    W_fc1 = weight_variable([img_resize/4 * img_resize/4 * cv3_channels, hidden])
     b_fc1 = bias_variable([hidden])
     
-    h_pool2_flat = tf.reshape(h_pool2, [-1, img_resize/4 * img_resize/4  * cv2_channels])
+    h_pool2_flat = tf.reshape(h_pool2, [-1, img_resize/4 * img_resize/4  * cv3_channels])
     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
     
     # Dropout
@@ -92,6 +103,8 @@ def train_tf(images, labels, parameters, training_epochs = 100):
         features["b_conv1"] = b_conv1.eval()
         features["W_conv2"] = W_conv2.eval()
         features["b_conv2"] = b_conv2.eval()
+        features["W_conv3"] = W_conv3.eval()
+        features["b_conv3"] = b_conv3.eval()
         features["W_fc1"] = W_fc1.eval()
         features["b_fc1"] = b_fc1.eval()
         features["W_fc2"] = W_fc2.eval()

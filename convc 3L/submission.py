@@ -14,7 +14,7 @@ from params import param
 
 print "begin"
 group = "test"
-sub_file = "submission_conv_12.csv"
+sub_file = "submission_conv3_1.csv"
     
 r = []
 r.append(["File", "Class"])
