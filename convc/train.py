@@ -39,6 +39,10 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 0.998744 10000 0.0005 5 5 4 8 4 16 0.5
 AUC 1.0 patient 1
 
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+1.0 10000 0.0005 5 5 16 16 4 16 0.5
+AUC 1.0 patient 1
+
 Train_2
 Accuracy: 0.936488 epochs 20000 learning rate 0.0011 hidden 10 *
 AUC 0.891772920461
@@ -121,7 +125,7 @@ from epinn24 import *
 from params import param
 
 print "begin"
-patient = 1
+patient = 3
 group = "train %s_new" % patient
 parameters = param(patient)
 training_epochs = 10000
@@ -131,7 +135,7 @@ features, prob, acc = train_tf(images, labels, parameters, training_epochs=train
 
 print "Accuracy:", "epochs", "learning rate", "cv1 size", "cv2 size", "cv1 channels", "cv2channels", "hidden", "img resize", "dropout"
 print acc, training_epochs, parameters["learning_rate"], parameters["cv1_size"], parameters["cv2_size"], parameters["cv1_channels"], parameters["cv2_channels"], parameters["hidden"], parameters["img_resize"], parameters["dropout"]
-print "AUC", auc(labels, prob), "patient", patient
+print "AUC", auc(labels, prob), "patient", patient, "con todo"
 
 scipy.io.savemat("resp_%s_new" % patient, features, do_compression=True)    
 print "end"

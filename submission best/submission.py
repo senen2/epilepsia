@@ -7,14 +7,15 @@ Created on Nov 9, 2016
 '''
 import tensorflow as tf
 import numpy as np
-from epinn31 import *
 import scipy.io
+
 from apiepi import *
+from epinn31 import *
 from params import param
 
 print "begin"
 group = "test"
-sub_file = "submission_conv_13.csv"
+sub_file = "submission_best 4-8 4-4 4-4.csv"
     
 r = []
 r.append(["File", "Class"])
@@ -23,7 +24,7 @@ for i in range(3):
     patient = i+1
     features = scipy.io.loadmat("resp_%s_new" % patient)
     #images, labels, names = read_images("%s %s_new" % (group, ii))
-    images, labels, names = read_images("%s_%s_new" % (group, patient))
+    images, labels, names = read_images("../data/%s_%s_new" % (group, patient))
     parameters = param(patient)
     
     prob = eval_conv(images, parameters, features)
