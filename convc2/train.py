@@ -4,6 +4,21 @@ Train Convulotional
 Created on Nov 9, 2016
 
 Train_1
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    1000      0.0005        5       5          4            8        4        16      0.5
+Accuracy: 0.888889 Accuracy test: 0.818182
+AUC 0.938528138528 AUC test 0.870202020202 patient 1
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    1000      0.0005        5       5          4            8        4        16      0.5
+Accuracy: 0.691824 Accuracy test: 0.689655
+AUC 0.5 AUC test 0.5 patient 1
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    1000      0.0005        5       5          4            8        4        16      0.5
+Accuracy: 0.691824 Accuracy test: 0.689655
+AUC 0.916244073387 AUC test 0.856290174472 patient 1
+
 
 
 Train_2
@@ -55,7 +70,7 @@ from epinn24 import *
 from params import param
 
 print "begin"
-patient = 3
+patient = 2
 group = "train %s_new" % patient
 parameters = param(patient)
 training_epochs = 10000
@@ -63,7 +78,7 @@ training_epochs = 10000
 images, labels, names = read_images(group)
 train_images, train_labels, test_images, test_labels = read_train_test(group, .6)
 
-features, train_prob, train_acc, test_prob, test_acc = train_tf(train_images, train_labels, test_images, test_labels, parameters, training_epochs=training_epochs)
+features, train_prob, train_acc, test_prob, test_acc = train_tf(train_images, train_labels, test_images, test_labels, parameters, patient, training_epochs=training_epochs)
 
 print "epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout"
 print ("    %s      %s        %s       %s          %s            %s        %s        %s      %s" 

@@ -13,8 +13,9 @@ from apiepi import *
 from params import param
 
 print "begin"
+group = "../data/train"
 group = "test"
-sub_file = "submission_conv_x.csv"
+sub_file = "submission_conv2_3.csv"
     
 r = []
 r.append(["File", "Class"])
@@ -34,11 +35,11 @@ for i in range(3):
         if prob[i][0] < prob[i][1]:
             p += 1
 
-    print "positives", p, "totals", len(names)
-    if group == "train":
+    print "patient", patient, "positives", p, "totals", len(names)
+    if group == "../data/train":
         print "AUC", auc(labels, prob)
+    else:
+        np.savetxt(sub_file, r, delimiter=',', fmt="%s,%s")
 
 print "gran total", len(r)
-np.savetxt(sub_file, r, delimiter=',', fmt="%s,%s")
-
 print "end"

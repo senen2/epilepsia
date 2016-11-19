@@ -24,6 +24,18 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 AUC 0.959563932003 patient 1
 
 Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+0.932161 1000 0.0005 5 5 4 8 4 16 0.5
+AUC 0.965136733186 patient 1 con todo
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+0.690955 1000 0.0005 5 5 4 8 4 16 0.5
+AUC 0.917738359202 patient 1 con todo
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+0.894472 1000 0.0005 5 5 4 8 4 16 0.5
+AUC 0.932804878049 patient 1 con todo
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
     1.0   10000     0.0005         5         5         4         4         4         16       0.3
 AUC 1.0 patient 1
 
@@ -42,6 +54,11 @@ AUC 1.0 patient 1
 Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
 1.0 10000 0.0005 5 5 16 16 4 16 0.5
 AUC 1.0 patient 1
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    10000      0.0005        5       5          16            8        4        16      0.5
+Accuracy: 0.979036 Accuracy test: 0.874608
+AUC 0.984848484848 AUC test 0.917033976125 patient 1
 
 Train_2
 Accuracy: 0.936488 epochs 20000 learning rate 0.0011 hidden 10 *
@@ -66,6 +83,11 @@ AUC 0.944406408325 patient 2
 Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize *
 0.981746     1000     0.01         5         5         4         4         4         16
 AUC 0.994771301495 patient 2
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    1000      0.01        5       5          4            4        4        16      0.5
+Accuracy: 0.893004 Accuracy test: 0.891626
+AUC 0.938394186459 AUC test 0.860191172777 patient 2
 
 Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
 0.892452 10000 0.0005 5 5 4 4 4 16 0.3
@@ -116,6 +138,33 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 AUC 0.5 patient 3
 
 @author: botpi
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+1.0 10000 0.0005 5 5 16 8 4 16 0.5
+AUC 1.0 patient 1 con todo
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    10000      0.0005        5       5          16            8        4        16      0.5
+Accuracy: 0.979036 Accuracy test: 0.874608
+AUC 0.984848484848 AUC test 0.917033976125 patient 1
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+0.892452 10000 0.01 5 5 16 8 4 16 0.5
+AUC 0.987009397457 patient 2 con todo
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    10000      0.01        5       5          16            8        4        16      0.5
+Accuracy: 0.893004 Accuracy test: 0.891626
+AUC 0.998617511521 AUC test 0.856761677549 patient 2
+
+Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
+0.987952 10000 0.005 5 5 16 8 4 16 0.5
+AUC 0.948616600791 patient 3 con todo
+
+epochs learning_rate cv1_size cv2_size cv1_channels cv2_channels hidden img_resize dropout
+    10000      0.005        5       5          16            8        4        16      0.5
+Accuracy: 1.0 Accuracy test: 0.929398
+AUC 1.0 AUC test 0.939593947815 patient 3
 '''
 import tensorflow as tf
 import numpy as np
@@ -125,10 +174,10 @@ from epinn24 import *
 from params import param
 
 print "begin"
-patient = 3
+patient = 1
 group = "train %s_new" % patient
 parameters = param(patient)
-training_epochs = 10000
+training_epochs = 1000
 
 images, labels, names = read_images(group)
 features, prob, acc = train_tf(images, labels, parameters, training_epochs=training_epochs)

@@ -10,8 +10,37 @@ Created on Nov 2, 2016
 import tensorflow as tf
 import numpy as np
 from apiepi import *
+    
+def learning_rate_p(patient, epoch):
+    if patient==2:
+        if epoch < 1000:
+            return 0.01
+        elif epoch< 2000:
+            return 0.009
+        elif epoch< 3000:
+            return 0.008
+        elif epoch< 4000:
+            return 0.007
+        elif epoch< 5000:
+            return 0.006
+        elif epoch< 6000:
+            return 0.005
+        elif epoch< 7000:
+            return 0.004
+        elif epoch< 8000:
+            return 0.003
+        elif epoch< 9000:
+            return 0.002
+        elif epoch< 8000:
+            return 0.002
+        else:
+            return 0.001
+    elif patient==3:
+        return 0.005
+    else:
+        return 0.0005
 
-def train_tf(images, labels, test_images, test_labels, parameters, training_epochs = 100):
+def train_tf(images, labels, test_images, test_labels, parameters, patient, training_epochs = 100):
     #print images.shape, labels.shape, test_images.shape, test_labels.shape
     
 #    display_step = 100
@@ -21,7 +50,7 @@ def train_tf(images, labels, test_images, test_labels, parameters, training_epoc
     cv2_channels = parameters["cv2_channels"]
     hidden = parameters["hidden"]
     img_resize = parameters["img_resize"]
-    learning_rate = parameters["learning_rate"]
+    #learning_rate = parameters["learning_rate"]
     dropout = parameters["dropout"]
     display_step = 100
 
@@ -57,6 +86,7 @@ def train_tf(images, labels, test_images, test_labels, parameters, training_epoc
     
     # Dropout
     keep_prob = tf.placeholder(tf.float32)
+    learning_rate = tf.placeholder(tf.float32)
     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
     
     # Readout Layer
@@ -76,7 +106,8 @@ def train_tf(images, labels, test_images, test_labels, parameters, training_epoc
         # Training cycle
         for epoch in range(training_epochs):
     #         print epoch
-            _, c = sess.run([optimizer, cost], feed_dict={x: images, y: labels, keep_prob: dropout})
+            _, c = sess.run([optimizer, cost], 
+                    feed_dict={x: images, y: labels, keep_prob: dropout, learning_rate:learning_rate_p(patient, epoch)})
             if (epoch+1) % display_step == 0:
                 print "Epoch:", '%04d' % (epoch+1), "cost=", "{:.9f}".format(c)
     
