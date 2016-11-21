@@ -13,28 +13,29 @@ from apiepi import *
     
 def learning_rate_p(patient, epoch):
     if patient==2:
-        if epoch < 1000:
-            return 0.01
-        elif epoch< 2000:
-            return 0.009
-        elif epoch< 3000:
-            return 0.008
-        elif epoch< 4000:
-            return 0.007
-        elif epoch< 5000:
-            return 0.006
-        elif epoch< 6000:
-            return 0.005
-        elif epoch< 7000:
-            return 0.004
-        elif epoch< 8000:
-            return 0.003
-        elif epoch< 9000:
-            return 0.002
-        elif epoch< 8000:
-            return 0.002
-        else:
-            return 0.001
+        return 0.01
+#         if epoch < 1000:
+#             return 0.01
+#         elif epoch< 2000:
+#             return 0.009
+#         elif epoch< 3000:
+#             return 0.008
+#         elif epoch< 4000:
+#             return 0.007
+#         elif epoch< 5000:
+#             return 0.006
+#         elif epoch< 6000:
+#             return 0.005
+#         elif epoch< 7000:
+#             return 0.004
+#         elif epoch< 8000:
+#             return 0.003
+#         elif epoch< 9000:
+#             return 0.002
+#         elif epoch< 8000:
+#             return 0.002
+#         else:
+#             return 0.001
     elif patient==3:
         return 0.005
     else:

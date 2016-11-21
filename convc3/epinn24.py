@@ -13,28 +13,7 @@ from apiepi import *
     
 def learning_rate_p(patient, epoch):
     if patient==2:
-        if epoch < 1000:
-            return 0.01
-        elif epoch< 2000:
-            return 0.009
-        elif epoch< 3000:
-            return 0.008
-        elif epoch< 4000:
-            return 0.007
-        elif epoch< 5000:
-            return 0.006
-        elif epoch< 6000:
-            return 0.005
-        elif epoch< 7000:
-            return 0.004
-        elif epoch< 8000:
-            return 0.003
-        elif epoch< 9000:
-            return 0.002
-        elif epoch< 8000:
-            return 0.002
-        else:
-            return 0.001
+        return 0.01
     elif patient==3:
         return 0.005
     else:
@@ -54,19 +33,20 @@ def train_tf(images, labels, test_images, test_labels, parameters, patient, trai
     dropout = parameters["dropout"]
     display_step = 100
 
-    x = tf.placeholder(tf.float32, shape=[None, 256])
+    x = tf.placeholder(tf.float32, shape=[1215, 120])
     y = tf.placeholder(tf.float32, shape=[None, 2])  
       
     # First Convolutional Layer  
     W_conv1 = weight_variable([cv1_size, cv1_size, 1, cv1_channels])
     b_conv1 = bias_variable([cv1_channels])
     
-    x_image = tf.reshape(x, [-1,img_resize,img_resize,1])
+    x_image = tf.reshape(x, [-1,12,10,1])
     
     h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
     h_pool1 = max_pool_2x2(h_conv1)
-    print h_conv1
-    print h_pool1
+    print "h_conv1", h_conv1 
+    print "h_pool1", h_pool1
+    print cv1_size, cv1_size 
     
     # Second Convolutional Layer
     W_conv2 = weight_variable([cv2_size, cv2_size, cv1_channels, cv2_channels])
@@ -78,10 +58,11 @@ def train_tf(images, labels, test_images, test_labels, parameters, patient, trai
     print h_pool2
     
     # Densely Connected Layer
-    W_fc1 = weight_variable([img_resize/4 * img_resize/4 * cv2_channels, hidden])
+    W_fc1 = weight_variable([12/4 * 10/2 * cv2_channels, hidden])
     b_fc1 = bias_variable([hidden])
     
-    h_pool2_flat = tf.reshape(h_pool2, [-1, img_resize/4 * img_resize/4  * cv2_channels])
+    h_pool2_flat = tf.reshape(h_pool2, [-1, 12/4 * 10/2  * cv2_channels])
+    print "h_pool2_flat:", h_pool2_flat
     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
     
     # Dropout
@@ -94,6 +75,7 @@ def train_tf(images, labels, test_images, test_labels, parameters, patient, trai
     b_fc2 = bias_variable([2])
     
     pred = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    print "pred", pred
     
     cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(pred + 1e-20), reduction_indices=[1]))
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)

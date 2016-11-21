@@ -72,7 +72,7 @@ def train_tf(images, labels, parameters, training_epochs = 100):
         sess.run(init)
     
         # Training cycle
-        for epoch in range(training_epochs):
+        for epoch in xrange(training_epochs):
     #         print epoch
             _, c = sess.run([optimizer, cost], feed_dict={x: images, y: labels, keep_prob: dropout})
             if (epoch+1) % display_step == 0:

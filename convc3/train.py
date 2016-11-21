@@ -83,10 +83,11 @@ print "begin"
 patient = 2
 group = "train %s_new" % patient
 parameters = param(patient)
-training_epochs = 10000
+training_epochs = 10
 
 images, labels, names = read_images(group)
 train_images, train_labels, test_images, test_labels = read_train_test(group, .6)
+print train_images.shape, train_labels.shape, test_images.shape, test_labels.shape
 
 features, train_prob, train_acc, test_prob, test_acc = train_tf(train_images, train_labels, test_images, test_labels, parameters, patient, training_epochs=training_epochs)
 
