@@ -33,7 +33,7 @@ def read_images(group):
             names.append(d)
         else:
             nnan +=1
-    print pos, neg, nnan
+    print "data: pos, neg, nan", pos, neg, nnan
     return np.array(images), np.array(labels), names
 
 def read_train_test(group, part):

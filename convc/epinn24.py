@@ -62,8 +62,17 @@ def train_tf(images, labels, parameters, training_epochs = 100):
     b_fc2 = bias_variable([2])
     
     pred = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    print "pred", pred
     
-    cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(pred + 1e-20), reduction_indices=[1]))
+    cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(pred, y, "cost"), name="cost")
+    
+#     auctf = tf.py_func(auc, [y, pred], [tf.float64])
+#     loss = tf.cast(auctf[0], tf.float32)
+#     print "auctf", auctf
+
+    #cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(pred + 1e-20), reduction_indices=[1]))
+    #print "cost", cost
+    #cost = tf.reduce_sum(loss)
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
     
     init = tf.initialize_all_variables()
@@ -86,6 +95,8 @@ def train_tf(images, labels, parameters, training_epochs = 100):
      
         acc = accuracy.eval({x:images, y: labels, keep_prob: 1})    
         prob = pred.eval({x:images, y: labels, keep_prob: 1})
+#         print auctf[0]
+#         aucr = auctf[0].eval({x:images, y: labels, keep_prob: 1})
         
         features = {}
         features["W_conv1"] = W_conv1.eval()
@@ -97,4 +108,4 @@ def train_tf(images, labels, parameters, training_epochs = 100):
         features["W_fc2"] = W_fc2.eval()
         features["b_fc2"] = b_fc2.eval()
     
-    return features, prob, acc
+    return features, prob, acc, c
