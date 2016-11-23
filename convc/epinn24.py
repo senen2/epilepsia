@@ -64,13 +64,14 @@ def train_tf(images, labels, parameters, training_epochs = 100):
     pred = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
     print "pred", pred
     
-    cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(pred, y, "cost"), name="cost")
+#     cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(pred, y, "cost"), name="cost")
+#     cost = tf.reduce_mean(tf.nn.weighted_cross_entropy_with_logits(pred, y, 5, "cost"), name="cost")
     
 #     auctf = tf.py_func(auc, [y, pred], [tf.float64])
 #     loss = tf.cast(auctf[0], tf.float32)
 #     print "auctf", auctf
 
-    #cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(pred + 1e-20), reduction_indices=[1]))
+    cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(pred + 1e-20), reduction_indices=[1]))
     #print "cost", cost
     #cost = tf.reduce_sum(loss)
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)

@@ -36,6 +36,37 @@ def read_images(group):
     print "data: pos, neg, nan", pos, neg, nnan
     return np.array(images), np.array(labels), names
 
+def read_images_balanced(group, balance):
+    images, labels, names = read_images(group)
+    print images.shape
+    
+    images = images.tolist()
+    labels = labels.tolist()
+    
+    images_pos = []
+    labels_pos = []
+    images_neg = []
+    labels_neg = []    
+    for i in xrange(len(labels)):
+        if labels[i][0] == 0:
+            images_pos.append(images[i])
+            labels_pos.append(labels[i])
+        else:
+            images_neg.append(images[i])
+            labels_neg.append(labels[i])
+        
+    images_bal_pos = []
+    labels_bal_pos = []
+    for i in xrange(balance):
+        images_bal_pos += images_pos
+        labels_bal_pos += labels_pos
+    print "pos x %s" % balance, np.array(images_bal_pos).shape
+
+    images = np.array(images_neg + images_bal_pos)
+    labels = np.array(labels_neg + labels_bal_pos)
+        
+    return images, labels, names
+
 def read_train_test(group, part):
     images, labels, names = read_images(group)
     

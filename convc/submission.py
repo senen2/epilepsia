@@ -42,8 +42,8 @@ from params import param
 
 print "begin"
 group = "train"
-group = "test"
-sub_file = "submission_conv_24.csv"
+#group = "test"
+sub_file = "submission_conv_26.csv"
     
 r = []
 r.append(["File", "Class"])
