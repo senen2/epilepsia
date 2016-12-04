@@ -25,8 +25,6 @@ def train_tf(images, labels, parameters, training_epochs = 100):
     display_step = 100
     
     best_cost = 1e99
-    best_acc = 0
-    best_auc = 0
 
     x = tf.placeholder(tf.float32, shape=[None, 256])
     y = tf.placeholder(tf.float32, shape=[None, 2])  
@@ -80,10 +78,6 @@ def train_tf(images, labels, parameters, training_epochs = 100):
     #print "cost", cost
     #cost = tf.reduce_sum(loss)
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
-
-    correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
     
     init = tf.initialize_all_variables()
     
@@ -99,7 +93,7 @@ def train_tf(images, labels, parameters, training_epochs = 100):
                 
             if c < best_cost:
                 best_cost = c
-                best_epoch_cost = epoch
+                best_epoch = epoch
                 features = {}
                 features["W_conv1"] = W_conv1.eval()
                 features["b_conv1"] = b_conv1.eval()
@@ -109,42 +103,13 @@ def train_tf(images, labels, parameters, training_epochs = 100):
                 features["b_fc1"] = b_fc1.eval()
                 features["W_fc2"] = W_fc2.eval()
                 features["b_fc2"] = b_fc2.eval()
-                scipy.io.savemat("resp_best_cost", features, do_compression=True) 
-            
-            acc = accuracy.eval({x:images, y: labels, keep_prob: 1})     
-            if acc > best_acc:
-                best_acc = acc
-                best_epoch_acc = epoch
-                features = {}
-                features["W_conv1"] = W_conv1.eval()
-                features["b_conv1"] = b_conv1.eval()
-                features["W_conv2"] = W_conv2.eval()
-                features["b_conv2"] = b_conv2.eval()
-                features["W_fc1"] = W_fc1.eval()
-                features["b_fc1"] = b_fc1.eval()
-                features["W_fc2"] = W_fc2.eval()
-                features["b_fc2"] = b_fc2.eval()
-                scipy.io.savemat("resp_best_acc", features, do_compression=True) 
-                
-            prob = pred.eval({x:images, y: labels, keep_prob: 1})
-            auc1 = auc(labels, prob)
-            if auc1 > best_auc and auc1 <= 1:
-                best_auc = c
-                best_epoch_auc = epoch
-                features = {}
-                features["W_conv1"] = W_conv1.eval()
-                features["b_conv1"] = b_conv1.eval()
-                features["W_conv2"] = W_conv2.eval()
-                features["b_conv2"] = b_conv2.eval()
-                features["W_fc1"] = W_fc1.eval()
-                features["b_fc1"] = b_fc1.eval()
-                features["W_fc2"] = W_fc2.eval()
-                features["b_fc2"] = b_fc2.eval()
-                scipy.io.savemat("resp_best_auc", features, do_compression=True) 
+                scipy.io.savemat("resp_best", features, do_compression=True) 
     
         print "Optimization Finished!"
     
         # Test model
+        correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
      
         acc = accuracy.eval({x:images, y: labels, keep_prob: 1})    
         prob = pred.eval({x:images, y: labels, keep_prob: 1})
@@ -161,8 +126,5 @@ def train_tf(images, labels, parameters, training_epochs = 100):
         features["W_fc2"] = W_fc2.eval()
         features["b_fc2"] = b_fc2.eval()
     
-    print "best cost", best_cost, "epoch", best_epoch_cost
-    print "best acc", best_acc, "epoch", best_epoch_acc
-    print "best auc", best_auc, "epoch", best_epoch_auc
-
+    print "best cost", best_cost, "epoch", best_epoch
     return features, prob, acc, c

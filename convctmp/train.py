@@ -117,14 +117,6 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 0.991206 10000 0.0005 5 5 4 8 4 16 0.5
 AUC 0.993636363636 patient 1 con todo
 
-best cost 0.0323752 epoch 1472
-best acc 0.997016 epoch 1591
-best auc 2.69174 epoch 1623
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
-0.95263 10000 0.01 5 5 16 8 25 16 0.5
-AUC 0.980089359522 Cost 0.132656 patient 2 con todo
-
-
 Train3
 Accuracy: 0.942774 epochs 20000 learning rate 0.0011 hidden 10 *
 AUC 0.948229352347
@@ -198,27 +190,6 @@ Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden
 0.988344 3000 0.005 5 5 4 4 4 16 0.5
 AUC 0.991076115486 Cost 0.328393 patient 3 con todo
 
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
-0.99182 3000 0.005 5 5 4 4 4 16 0.5
-AUC 0.992505679873 Cost 0.218764 patient 3 con todo
-
-best cost 0.0294573 epoch 2560
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
-0.556529 10000 0.005 5 5 4 8 16 16 0.5
-AUC 0.5 Cost 0.686742 patient 3 con todo
-
-best cost 0.00816442 epoch 3909
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
-0.995326 10000 0.005 5 5 4 8 16 16 0.5
-AUC 0.995750728787 Cost 0.0310193 patient 3 con todo
-
-best cost 0.204824 epoch 7258
-best acc 0.728529 epoch 0
-best auc 0.613361 epoch 44
-Accuracy: epochs learning rate cv1 size cv2 size cv1 channels cv2channels hidden img resize dropout
-0.976308 10000 0.0005 5 5 4 8 4 16 0.5
-AUC 0.983739837398 Cost 0.230548 patient 1 con todo
-
 '''
 import tensorflow as tf
 import numpy as np
@@ -229,14 +200,14 @@ from params import param
 from apiepi import read_images_balanced
 
 print "begin"
-patient = 1
+patient = 3
 group = "train_%s_new" % patient
 parameters = param(patient)
-training_epochs = 4000
+training_epochs = 10000
 
 #images, labels, names = read_images(group)
 #print images.shape, labels.shape, len(names)
-images, labels, names = read_images_balanced(group, 2)
+images, labels, names = read_images_balanced(group, 1)
 print images.shape, labels.shape, len(names)
 features, prob, acc, cost = train_tf(images, labels, parameters, training_epochs=training_epochs)
 

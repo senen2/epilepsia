@@ -43,7 +43,7 @@ from params import param
 print "begin"
 group = "train"
 group = "test"
-sub_file = "submission_conv_48.csv"
+sub_file = "submission_conv_28.csv"
     
 r = []
 r.append(["File", "Class"])
@@ -59,14 +59,8 @@ for i in range(3):
     
     p = 0
     for i in xrange(len(names)):
-#         if prob[i][1] > 0.999:
-#             r.append([names[i] + ".mat", 1])
-#         elif prob[i][1] < 0.001:
-#             r.append([names[i] + ".mat", 0])
-#         else:
-#             r.append([names[i] + ".mat", prob[i][1] ])
-
-        r.append([names[i] + ".mat", prob[i][1] ])
+        r.append([names[i] + ".mat", prob[i][1]])
+        #if prob[i][0] < prob[i][1]:
         if prob[i][1]>0.5:
             p += 1
 
